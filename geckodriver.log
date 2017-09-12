@@ -121,3 +121,93 @@ Unable to read VR Path Registry from C:\Users\gaozijian\AppData\Local\openvr\ope
 1505193572859	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505193571475"
 1505193572863	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505193571475"
 1505193574601	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E6%98%9F%E7%A9%BA"
+1505194184431	geckodriver	INFO	geckodriver 0.18.0
+1505194184447	geckodriver	INFO	Listening on 127.0.0.1:54877
+1505194186431	geckodriver::marionette	INFO	Starting browser C:\Program Files\Mozilla Firefox\firefox.exe with args ["-marionette"]
+1505194186822	addons.xpi	WARN	Error parsing extensions state: [Exception... "Component returned failure code: 0x80520012 (NS_ERROR_FILE_NOT_FOUND) [amIAddonManagerStartup.readStartupData]"  nsresult: "0x80520012 (NS_ERROR_FILE_NOT_FOUND)"  location: "JS frame :: resource://gre/modules/addons/XPIProvider.jsm :: loadExtensionState :: line 1596"  data: no] Stack trace: loadExtensionState()@resource://gre/modules/addons/XPIProvider.jsm:1596 < getInstallState()@resource://gre/modules/addons/XPIProvider.jsm:1631 < checkForChanges()@resource://gre/modules/addons/XPIProvider.jsm:3152 < startup()@resource://gre/modules/addons/XPIProvider.jsm:2246 < callProvider()@resource://gre/modules/AddonManager.jsm:271 < _startProvider()@resource://gre/modules/AddonManager.jsm:741 < startup()@resource://gre/modules/AddonManager.jsm:908 < startup()@resource://gre/modules/AddonManager.jsm:3122 < observe()@jar:file:///C:/Program%20Files/Mozilla%20Firefox/omni.ja!/components/addonManager.js:65
+1505194187430	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\gaozijian\AppData\Local\openvr\openvrpaths.vrpath
+[Parent 3580] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+Unable to read VR Path Registry from C:\Users\gaozijian\AppData\Local\openvr\openvrpaths.vrpath
+[Child 8296] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 8296] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1505194189932	Marionette	INFO	Listening on port 54883
+1505194189986	Marionette	INFO	Listening on port 54883
+1505194190124	Marionette	WARN	TLS certificate errors will be ignored for this session
+1505194190269	Marionette	DEBUG	loaded listener.js
+1505194190321	Marionette	DEBUG	Received DOM event "beforeunload" for "about:blank"
+1505194190859	Marionette	DEBUG	Received DOM event "pagehide" for "about:blank"
+1505194190860	Marionette	DEBUG	Received DOM event "unload" for "about:blank"
+1505194192524	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194192323"
+1505194192533	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194192323"
+1505194192617	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E5%B0%91%E5%A5%B3"
+1505194193991	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194195007	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://ipservice.163.com/if/cbox"
+1505194195112	Marionette	DEBUG	Received DOM event "pageshow" for "https://ipservice.163.com/if/cbox"
+1505194195586	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://519914-0.sh.1252135381.clb.myqcloud.com/if/2430226.html"
+1505194196461	Marionette	DEBUG	Received DOM event "pageshow" for "https://519914-0.sh.1252135381.clb.myqcloud.com/if/2430226.html"
+1505194196463	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194197261	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E5%B0%91%E5%A5%B3"
+1505194199217	Marionette	DEBUG	Received DOM event "beforeunload" for "http://huaban.com/search/?q=%E5%B0%91%E5%A5%B3"
+1505194199344	Marionette	DEBUG	Received DOM event "pagehide" for "http://huaban.com/search/?q=%E5%B0%91%E5%A5%B3"
+1505194199345	Marionette	DEBUG	Received DOM event "unload" for "http://huaban.com/search/?q=%E5%B0%91%E5%A5%B3"
+1505194199769	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967301"
+1505194199770	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967302"
+1505194201798	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E8%90%9D%E8%8E%89"
+1505194201989	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194201995	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194202033	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194200214"
+1505194202037	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194200214"
+1505194203555	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E8%90%9D%E8%8E%89"
+1505194205834	Marionette	DEBUG	Received DOM event "beforeunload" for "http://huaban.com/search/?q=%E8%90%9D%E8%8E%89"
+1505194205978	Marionette	DEBUG	Received DOM event "pagehide" for "http://huaban.com/search/?q=%E8%90%9D%E8%8E%89"
+1505194205979	Marionette	DEBUG	Received DOM event "unload" for "http://huaban.com/search/?q=%E8%90%9D%E8%8E%89"
+1505194206302	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967312"
+1505194206304	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967313"
+1505194208019	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E4%BA%BA%E7%89%A9"
+1505194208025	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194208031	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194208233	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194206901"
+1505194208236	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194206901"
+1505194209966	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E4%BA%BA%E7%89%A9"
+1505194215073	Marionette	DEBUG	Received DOM event "beforeunload" for "http://huaban.com/search/?q=%E4%BA%BA%E7%89%A9"
+1505194215179	Marionette	DEBUG	Received DOM event "pagehide" for "http://huaban.com/search/?q=%E4%BA%BA%E7%89%A9"
+1505194215181	Marionette	DEBUG	Received DOM event "unload" for "http://huaban.com/search/?q=%E4%BA%BA%E7%89%A9"
+1505194215601	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967318"
+1505194215601	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967319"
+1505194217243	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E9%A3%8E%E6%99%AF"
+1505194217247	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194217250	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194217422	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194215991"
+1505194217429	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194215991"
+1505194219353	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E9%A3%8E%E6%99%AF"
+1505194225233	Marionette	DEBUG	Received DOM event "beforeunload" for "http://huaban.com/search/?q=%E9%A3%8E%E6%99%AF"
+1505194225363	Marionette	DEBUG	Received DOM event "pagehide" for "http://huaban.com/search/?q=%E9%A3%8E%E6%99%AF"
+1505194225364	Marionette	DEBUG	Received DOM event "unload" for "http://huaban.com/search/?q=%E9%A3%8E%E6%99%AF"
+1505194225736	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967324"
+1505194225736	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967325"
+1505194227335	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E5%AE%87%E5%AE%99"
+1505194227484	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194227488	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194227541	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194226473"
+1505194227547	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194226473"
+1505194229493	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E5%AE%87%E5%AE%99"
+1505194234136	Marionette	DEBUG	Received DOM event "beforeunload" for "http://huaban.com/search/?q=%E5%AE%87%E5%AE%99"
+1505194234255	Marionette	DEBUG	Received DOM event "pagehide" for "http://huaban.com/search/?q=%E5%AE%87%E5%AE%99"
+1505194234256	Marionette	DEBUG	Received DOM event "unload" for "http://huaban.com/search/?q=%E5%AE%87%E5%AE%99"
+1505194234553	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967330"
+1505194234554	Marionette	DEBUG	Received observer notification "outer-window-destroyed" for "4294967331"
+1505194236057	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://huaban.com/search/?q=%E5%9F%8E%E5%B8%82"
+1505194236248	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://ipservice.163.com/if/box"
+1505194236250	Marionette	DEBUG	Received DOM event "pageshow" for "http://ipservice.163.com/if/box"
+1505194236305	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "https://qiyukf.com/sdk/res/delegate.html?1505194235183"
+1505194236310	Marionette	DEBUG	Received DOM event "pageshow" for "https://qiyukf.com/sdk/res/delegate.html?1505194235183"
+1505194238102	Marionette	DEBUG	Received DOM event "pageshow" for "http://huaban.com/search/?q=%E5%9F%8E%E5%B8%82"
+Unable to read VR Path Registry from C:\Users\gaozijian\AppData\Local\openvr\openvrpaths.vrpath
+[GPU 288] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[GPU 288] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+Unable to read VR Path Registry from C:\Users\gaozijian\AppData\Local\openvr\openvrpaths.vrpath
+[Child 1468] WARNING: pipe error: 109: file c:/builds/moz2_slave/m-rel-w64-00000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
