@@ -2,9 +2,13 @@ import requests as req
 from selenium import webdriver as dri
 import urllib as url
 import os
+from time import sleep
+import json
 class DataCatcher:
-    brwoser=None;
-    def __init__(self,storedir=None,btype="firefox"):
+    brwoser=None
+    level=None
+    sleeptime=None
+    def __init__(self,storedir=None,btype="firefox",catchLevel=5,sleeptime=1):
         if storedir==None or storedir=='.':
             storedir='.'
         elif not(storedir in os.listdir(".")):
@@ -19,7 +23,9 @@ class DataCatcher:
             DataCatcher.brwoser=ts[btype]()
         
         self.storedir=storedir
-
+        DataCatcher.level=catchLevel
+        # DataCatcher.brwoser.get("http://www.huaban.com")
+        DataCatcher.sleeptime=sleeptime
 
     def downloadAll(self,li,indexs):
         """传入一个列表 下载列表中的所有链接
@@ -43,13 +49,20 @@ class DataCatcher:
         """
         indexs=["%s/%d%s"%(self.storedir,i,ext) for i in range(len(li))]
         self.downloadAll(li,indexs)
-    
+
+
+class HuabanCatcher(DataCatcher):
     def getImgFromHuaban(self,link):
         """
         从一个地址下载上面的所有图片
         link:地址
         """
         DataCatcher.brwoser.get(link)
+        print("paging.....")
+        for i in range(DataCatcher.level):
+            DataCatcher.brwoser.execute_script("window.scrollBy(0,5000)")
+            sleep(DataCatcher.sleeptime)
+        #持续翻页
         print("loading......")
         # text=w.page_source
         # b=bs(text,"lxml")
@@ -81,4 +94,11 @@ class DataCatcher:
     def getImagesByList(lst):
         for i in lst:
             DataCatcher.getImageByClass(i)
-        
+    
+    def getImagesByJson(lstpath,encoding="UTF-8"):
+        obj=json.load(open(lstpath,encoding=encoding))
+        DataCatcher.getImagesByList(obj)
+
+
+class SebimmCatcher(DataCatcher):
+    
