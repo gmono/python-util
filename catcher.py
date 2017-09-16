@@ -34,9 +34,13 @@ class Downloader:
         """
         静态函数 用于下载
         """
-        res=req.get(link)
-        with open(index,"wb") as file:
-            file.write(res.content)
+        try:
+            res=req.get(link)
+            with open(index,"wb") as file:
+                file.write(res.content)
+        except:
+            print("下载错误!")
+        
 
 
     def downloadAll(self,li,indexs):
@@ -135,7 +139,7 @@ class SebimmCatcher(Downloader):
         Downloader.__init__(self,usebrowser=False,storedir=storedir,btype=btype)
 
         # 网址
-        self.baseurl=""
+        self.baseurl="http://sebimeimei123.com"
         # 初始化
         res=req.get(self.baseurl)
         res.encoding="cp936"
