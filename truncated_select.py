@@ -31,7 +31,7 @@ def CopyTo(clss,dirn,fn):
     erfn=os.path.join(erd,fn)
     trfn=os.path.join(".",clss,dirn,fn)
     shutil.copy(trfn,erfn)
-    # os.remove(trfn)
+    os.remove(trfn)
     print(f"Cut file from {trfn} to {erfn}")
 
 
@@ -48,6 +48,7 @@ def selectError(paths):
             plt.close("all") #释放资源
         except:
             errlist.append(f)
+    
     return errlist
 
 
@@ -58,11 +59,17 @@ def selectClass(clss):
     #所有类型目录都在.目录下
     dirs=os.listdir(clss)
     dirlist=[]
+    esum=0
     for d in dirs:
         #合成路径
         errlist=selectError(os.path.join(".",clss,d))
         item={"dirname":d,"filenames":errlist}
         dirlist.append(item)
+        print(f"扫描一个目录完成，将处理{len(errlist)}个文件")
+        esum+=len(errlist)
+        if len(errlist)!=0:
+            print(f"本类别:{clss} 当前扫描到损坏文件{esum}个")
+    
     return dirlist
 
 
