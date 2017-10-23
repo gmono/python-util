@@ -6,6 +6,7 @@ from time import sleep
 import json
 from pyquery import PyQuery as pq
 from threading import Thread as th
+from abc import abstractmethod,ABCMeta
 class Downloader:
     brwoser=None
     
@@ -59,24 +60,29 @@ class Downloader:
 
 
 
-    def downloadAllByIndex(self,li,ext):
+    def downloadAllByIndex(self,li,ext,storedir=None):
         """
         直接下载所有文件，按顺序命名
         ext为扩展名
         li为链接表
+        如果storedir不给值则采用self.storedir 这样就非线程安全
+        否则为线程安全
         """
-        indexs=["%s/%d%s"%(self.storedir,i,ext) for i in range(len(li))]
+        if storedir==None:
+            storedir=self.storedir
+        indexs=["%s/%d%s"%(storedir,i,ext) for i in range(len(li))]
         self.downloadAll(li,indexs)
 
 
 class DataCatcher(Downloader):
     level=None
     sleeptime=None
-    def __init__(self,storedir=None,btype="firefox",catchLevel=5,sleeptime=1):
-        super(Downloader,self).__init__(storedir,btype)
+    def __init__(self,storedir=None,btype="firefox",catchLevel=5,sleeptime=1,isautoopen=True):
+        Downloader.__init__(self,storedir,btype)
         cls=DataCatcher
         cls.level=catchLevel
-        # DataCatcher.brwoser.get("http://www.huaban.com")
+        if isautoopen:
+            DataCatcher.brwoser.get("http://www.huaban.com")
         cls.sleeptime=sleeptime
     
     def getImgFromHuaban(self,link):
@@ -117,7 +123,7 @@ class DataCatcher(Downloader):
         """
         if folname==None:
             folname=classdesc
-        cls(classdesc).getImage(classdesc)
+        cls(folname,isautoopen=False).getImage(classdesc)
 
     
     @classmethod
@@ -135,7 +141,10 @@ class DataCatcher(Downloader):
 # H网爬虫
 # 合成规则 self.nowCatchURL+index%d.html 作为某一页面的地址
 class SebimmCatcher(Downloader):
-    def __init__(self,storedir=None,btype="firefox"):
+    __metaclass__=ABCMeta
+    #必须要clsid参数 指明以哪个大菜单为准
+    #目前所知 0为视频 1为图片 3为小说 2 不明
+    def __init__(self,clsid,storedir=None,btype="firefox"):
         Downloader.__init__(self,usebrowser=False,storedir=storedir,btype=btype)
 
         # 网址
@@ -146,7 +155,11 @@ class SebimmCatcher(Downloader):
         text=res.text
         q=pq(text)
         # 解析
-        ele=q(".first + dl")
+        # 得到大类dl组
+        tcls=q("#menu>.wrap>dl")
+        #得到大类菜单dl
+        # print(tcls)
+        ele=pq(tcls[clsid])
         eles=ele.children("dd")
         # 创建分类
         self.topClass={}
@@ -165,6 +178,8 @@ class SebimmCatcher(Downloader):
         #打印选择
         print("可选的分类，请先选择分类(调用selectClass函数):\n")
         self.showAllClass()
+        #参数 是否使用多线程进行页面加载
+        self.ismultithread=False
 
     def selectClass(self,classname):
         if not (classname in self.topClass):
@@ -210,6 +225,18 @@ class SebimmCatcher(Downloader):
         self.selectPage(self.nowpage-1)
     
 
+    # 由于目录页为通用结构 只需要重写此函数即可实现其他类型页面的抓取
+    #对于每个具体的内容页 到此函数时 存储用的目录已经被创建好了 只需要按需填充内容
+    # 注意由于使用了多线程 此函数中只能写关于内容抓取的逻辑 而且不能使用成员变量
+    @abstractmethod
+    def catchContent(self,nowdir,text):
+        """
+        nowdir 内容存储的目录
+        text 内容页的文本
+        """
+        pass
+
+    
     def catchPage(self,nowdir,link):
         """
         抓取一页的所有图片放到 nowdir中
@@ -217,24 +244,12 @@ class SebimmCatcher(Downloader):
         text=req.get(link)
         text.encoding="cp936"
         text=text.text
-        #解析
-        page=pq(text)
-        content=page(".main-content")
-        imgs=content("img")
-        srcs=[pq(img).attr("src") for img in imgs]
-        #开始下载
-        self.storedir=nowdir
-        self.downloadAllByIndex(srcs,".jpg")
+        self.catchContent(nowdir,text)
 
-    def catchOne(self):
-        """
-        抓取一个页面
-        """
-        nowurl=self.nowPageURL
-        text=req.get(nowurl)
-        text.encoding="cp936"
-        text=text.text
-        # 解析
+    #若每一页列表结构有所不同则重写此函数
+    #返回names和Links
+    #此为默认列表分析函数
+    def parseList(self,text):
         p=pq(text)
         list20=p(".list20")
         dds=list20("a")
@@ -244,6 +259,19 @@ class SebimmCatcher(Downloader):
         dds=[pq(i) for i in dds]
         burl=self.baseurl
         links=[burl+e.attr("href") for e in dds]
+        return (names,links)
+
+
+    def catchOne(self):
+        """
+        抓取一个目录页面
+        """
+        nowurl=self.nowPageURL
+        text=req.get(nowurl)
+        text.encoding="cp936"
+        text=text.text
+        # 解析
+        names,links=self.parseList()
         for n,l in zip(names,links):
             #n为子目录名字
             #l为子页面链接
@@ -252,7 +280,20 @@ class SebimmCatcher(Downloader):
                 os.mkdir(self.basedir+n)
             nowdir=str.format("{}{}/",self.basedir,n)
             #通过nowdir和l来抓取
-            self.catchPage(nowdir,l)
+            #如果一页内容直接加载错误 即在catchPage中出错 则在这里处理
+            #如果是在catchContent里出错可能需要自己显示一些信息
+            try:
+                if not self.ismultithread:
+                    #不使用
+                    self.catchPage(nowdir,l)
+                else:
+                    #使用多线程 抓取每一内容页的内容
+                    tempth=th(target=self.catchPage,args=(nowdir,l))
+                    tempth.start()
+                
+            except:
+                #因为有可能出现某一页不能加载 所以这里拦截
+                print("一页加载错误!\n")
 
     def catch(self,pagesum=1):
         """
@@ -260,6 +301,42 @@ class SebimmCatcher(Downloader):
         """
         for i in range(pagesum):
             print("当前抓取第%d页\n"%self.nowpage)
-            self.catchOne()
+            try:
+                self.catchOne()
+            except:
+                print("一目录页出现错误，加载下一页\n")
             self.nextPage()
+#图片抓取器
+class SbmPictureCatcher(SebimmCatcher):
+    def __init__(self,sdir=None):
+        SebimmCatcher.__init__(self,clsid=1,storedir=sdir)
 
+    def catchContent(self,nowdir,text):
+        #解析
+        page=pq(text)
+        content=page(".main-content")
+        imgs=content("img")
+        srcs=[pq(img).attr("src") for img in imgs]
+        #开始下载
+        self.downloadAllByIndex(srcs,".jpg",storedir=nowdir)
+
+#文章抓取器  
+class SbmArticleCatcher(SebimmCatcher):
+    def __init__(self,storedir=None,btype="firefox"):
+        SebimmCatcher.__init__(self,clsid=3,storedir=storedir,btype=btype)
+    
+
+    #重写catchContent
+    def catchContent(self,nowdir,text):
+        page=pq(text)
+        content=page(".main-content")
+        ftext=content.text()
+        #nowdir后方带/ 因此这里不加/
+        with open("%scontent.txt"%nowdir,"wb") as f:
+            f.write(ftext.encode())
+
+#当前未实现 可能需要其他实现
+class SbmVideoCacher(SebimmCatcher):
+    def __init__(self,storedir=None,btype="firefox"):
+        SebimmCatcher.__init__(self,clsid=0,storedir=storedir,btype=btype)
+    
