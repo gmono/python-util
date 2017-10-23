@@ -40,11 +40,11 @@ def selectError(paths):
     #得到给定路径的所有文件
     files=os.listdir(paths)
     #过滤得到图片文件
-    files=[os.path.join(paths,f) for f in files if not (re.search(".*\.jpg",f) is None)]
+    files=[f for f in files if not (re.search(".*\.jpg",f) is None)]
     errlist=[]
     for f in files:
         try:
-            plt.imread(f)
+            plt.imread(os.path.join(paths,f))
             plt.close("all") #释放资源
         except:
             errlist.append(f)
