@@ -144,9 +144,9 @@ class SebimmCatcher(Downloader):
     __metaclass__=ABCMeta
     #必须要clsid参数 指明以哪个大菜单为准
     #目前所知 0为视频 1为图片 3为小说 2 不明
-    def __init__(self,clsid,storedir=None,btype="firefox"):
+    def __init__(self,clsid,storedir=None,btype="firefox",update_mod=False):
         Downloader.__init__(self,usebrowser=False,storedir=storedir,btype=btype)
-
+        self.update_mod=update_mod
         # 网址
         self.baseurl="http://sebimeimei123.com"
         # 初始化
@@ -278,6 +278,9 @@ class SebimmCatcher(Downloader):
             print("抓取:%s\n"%n)
             if not(n in os.listdir(self.basedir)):
                 os.mkdir(self.basedir+n)
+            elif self.update_mod:
+                #如果是更新模式 则遇到目录n已经存在的情况 就直接跳过
+                continue
             nowdir=str.format("{}{}/",self.basedir,n)
             #通过nowdir和l来抓取
             #如果一页内容直接加载错误 即在catchPage中出错 则在这里处理
