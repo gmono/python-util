@@ -7,6 +7,13 @@ import json
 from pyquery import PyQuery as pq
 from threading import Thread as th
 from abc import abstractmethod,ABCMeta
+
+class EndException(Exception):
+    def __init__(self):
+        pass
+    def __repr__(self):
+        return "处理已结束"
+
 class Downloader:
     brwoser=None
     
@@ -135,6 +142,7 @@ class DataCatcher(Downloader):
     def getImagesByJson(cls,lstpath,encoding="UTF-8"):
         obj=json.load(open(lstpath,encoding=encoding))
         cls.getImagesByList(obj)
+
 
 
 
@@ -276,11 +284,15 @@ class SebimmCatcher(Downloader):
             #n为子目录名字
             #l为子页面链接
             print("抓取:%s\n"%n)
+            #遇到不存在的目录就创建 如果不是更新模式 就直接在已有的目录里放文件 即假设目录为空
+            #如果是更新模式 则遇到已有的目录就认为更新已经结束 则直接抛出EndException
             if not(n in os.listdir(self.basedir)):
                 os.mkdir(self.basedir+n)
             elif self.update_mod:
                 #如果是更新模式 则遇到目录n已经存在的情况 就直接跳过
-                continue
+                # continue
+                # 改变策略 如果是更新模式 就直接抛出“更新已经结束的exception 因为遇到已经存在的 表示更新已经到了末尾
+                raise EndException()
             nowdir=str.format("{}{}/",self.basedir,n)
             #通过nowdir和l来抓取
             #如果一页内容直接加载错误 即在catchPage中出错 则在这里处理
@@ -306,13 +318,15 @@ class SebimmCatcher(Downloader):
             print("当前抓取第%d页\n"%self.nowpage)
             try:
                 self.catchOne()
+            except EndException as e:
+                print("更新已经结束!")
             except:
                 print("一目录页出现错误，加载下一页\n")
             self.nextPage()
 #图片抓取器
 class SbmPictureCatcher(SebimmCatcher):
-    def __init__(self,sdir=None):
-        SebimmCatcher.__init__(self,clsid=1,storedir=sdir)
+    def __init__(self,sdir=None,update=False):
+        SebimmCatcher.__init__(self,clsid=1,storedir=sdir,update_mod=update)
 
     def catchContent(self,nowdir,text):
         #解析
@@ -321,12 +335,13 @@ class SbmPictureCatcher(SebimmCatcher):
         imgs=content("img")
         srcs=[pq(img).attr("src") for img in imgs]
         #开始下载
+        #这里的下载 调用下载器的下载函数  其永远是多线程下载 即对图片本身的下载是多线程的
         self.downloadAllByIndex(srcs,".jpg",storedir=nowdir)
 
 #文章抓取器  
 class SbmArticleCatcher(SebimmCatcher):
-    def __init__(self,storedir=None,btype="firefox"):
-        SebimmCatcher.__init__(self,clsid=3,storedir=storedir,btype=btype)
+    def __init__(self,storedir=None,btype="firefox",update=False):
+        SebimmCatcher.__init__(self,clsid=3,storedir=storedir,btype=btype,update_mod=update)
     
 
     #重写catchContent
@@ -340,6 +355,6 @@ class SbmArticleCatcher(SebimmCatcher):
 
 #当前未实现 可能需要其他实现
 class SbmVideoCacher(SebimmCatcher):
-    def __init__(self,storedir=None,btype="firefox"):
-        SebimmCatcher.__init__(self,clsid=0,storedir=storedir,btype=btype)
+    def __init__(self,storedir=None,btype="firefox",update=False):
+        SebimmCatcher.__init__(self,clsid=0,storedir=storedir,btype=btype,update_mod=update)
     

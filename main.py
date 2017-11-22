@@ -25,18 +25,31 @@ if __name__=="__main__":
         2:cer.SbmPictureCatcher,
         3:cer.SbmArticleCatcher
     }
+    # 选择是否是更新模式
+    ifupdate=input("请输入是否是更新模式(y/n):")
+    if ifupdate=='y':
+        ifupdate=True
+    else:
+        ifupdate=False
     # 创建抓取器对象
-    ser=classmap[sele]()
+    ser=classmap[sele](update=ifupdate)
     print("\n")
     print("请选择分类:")
     cn=input()
     ser.selectClass(cn)
-    #选择起始页和页数 
+    #选择起始页和页数 默认为1
     startpage=1
-    print("请选择起始页(默认为1):")
-    startpage=int(input())
-    print("请输入抓取的页数:")
-    pages=int(input())
+    #更新模式默认从1开始 无需选择
+    if not ifupdate:
+        print("请选择起始页(默认为1):")
+        startpage=int(input())
+    # 更新模式默认为100页抓取
+    pages=1
+    if ifupdate:
+        pages=100
+    else:
+        print("请输入抓取的页数:")
+        pages=int(input())
     #多线程
     print("请选择是否使用多线程页面加载(0不使用，1使用 使用可能被防火墙拦截):")
     s=int(input())
