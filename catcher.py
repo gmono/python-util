@@ -320,6 +320,7 @@ class SebimmCatcher(Downloader):
                 self.catchOne()
             except EndException as e:
                 print("更新已经结束!")
+                break
             except:
                 print("一目录页出现错误，加载下一页\n")
             self.nextPage()
